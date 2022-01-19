@@ -16,4 +16,7 @@ public interface AccountInfoDao {
     @Update("update account_info set account_balance = account_balance + #{amount} where account_no = #{accountNo}")
     int updateAccountBalance(@Param("accountNo") String accountNo, @Param("amount") Double amount);
 
+
+    @Update("update account_info set account_balance = account_balance - #{money} where account_no = #{accountNo}")
+    void withHold(@Param("accountNo") String accountNo, @Param("money") Double money);
 }

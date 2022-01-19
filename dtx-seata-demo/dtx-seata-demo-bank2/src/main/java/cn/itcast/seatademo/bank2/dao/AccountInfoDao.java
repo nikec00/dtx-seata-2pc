@@ -15,4 +15,6 @@ public interface AccountInfoDao {
     @Update("UPDATE account_info SET account_balance = account_balance + #{amount} WHERE account_no = #{accountNo}")
     int updateAccountBalance(@Param("accountNo") String accountNo, @Param("amount") Double amount);
 
+    @Update("UPDATE account_info SET account_balance = account_balance + #{money} WHERE account_no = #{accountNo}")
+    void receipt(@Param("accountNo") String accountNo, @Param("money")Double money);
 }

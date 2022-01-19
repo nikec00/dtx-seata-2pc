@@ -30,16 +30,33 @@ public class AccountInfoServiceImpl implements AccountInfoService {
     public void updateAccountBalance(String accountNo, Double amount) {
         log.info("bank1 service begin,XID：{}", RootContext.getXID());
         //扣减张三的金额
-        accountInfoDao.updateAccountBalance(accountNo,amount *-1);
+        accountInfoDao.updateAccountBalance(accountNo, amount * -1);
         //调用李四微服务，转账
         String transfer = bank2Client.transfer(amount);
-        if("fallback".equals(transfer)){
+        if ("fallback".equals(transfer)) {
             //调用李四微服务异常
             throw new RuntimeException("调用李四微服务异常");
         }
-        if(amount == 2){
+        if (amount == 2) {
             //人为制造异常
             throw new RuntimeException("bank1 make exception..");
         }
+    }
+
+    @GlobalTransactional(rollbackFor = Exception.class)
+    @Transactional
+    @Override
+    public void withHold(String s, Double money) {
+            log.info("bank1 service begin,XID:{}", RootContext.getXID());
+            // 转账扣款
+            accountInfoDao.withHold(s, money);
+            // 转账收款
+            String receipt = bank2Client.receipt(money);
+            if (money == 100) {
+                throw new RuntimeException("金额不对：100");
+            }
+            if (receipt.equals("fallback")) {
+                throw new RuntimeException();
+            }
     }
 }

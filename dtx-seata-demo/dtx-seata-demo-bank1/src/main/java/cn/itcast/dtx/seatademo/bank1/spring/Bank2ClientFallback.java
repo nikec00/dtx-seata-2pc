@@ -14,4 +14,9 @@ public class Bank2ClientFallback implements Bank2Client {
 
         return "fallback";
     }
+
+    @Override
+    public String receipt(Double money) {
+        return "fallback";
+    }
 }

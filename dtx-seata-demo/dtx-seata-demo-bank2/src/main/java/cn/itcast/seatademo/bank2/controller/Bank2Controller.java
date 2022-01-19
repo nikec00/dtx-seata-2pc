@@ -17,9 +17,17 @@ public class Bank2Controller {
 
     //接收张三的转账
     @GetMapping("/transfer")
-    public String transfer(Double amount){
+    public String transfer(Double amount) {
         //李四增加金额
-        accountInfoService.updateAccountBalance("2",amount);
-        return "bank2"+amount;
+        accountInfoService.updateAccountBalance("2", amount);
+        return "bank2" + amount;
     }
+
+    @GetMapping("/receipt")
+    public String receipt(Double money) {
+        accountInfoService.receipt("2",money);
+        return "bank2:" + money;
+    }
+
+
 }

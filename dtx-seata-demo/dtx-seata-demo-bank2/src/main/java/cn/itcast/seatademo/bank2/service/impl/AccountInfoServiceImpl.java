@@ -31,4 +31,14 @@ public class AccountInfoServiceImpl implements AccountInfoService {
             throw new RuntimeException("bank2 make exception..");
         }
     }
+
+    @Transactional
+    @Override
+    public void receipt(String accountNo, Double money) {
+        log.info("bank2 service begin,XID：{}",RootContext.getXID());
+        accountInfoDao.receipt(accountNo,money);
+        if (money == 200) {
+            throw new RuntimeException("200不对");
+        }
+    }
 }
